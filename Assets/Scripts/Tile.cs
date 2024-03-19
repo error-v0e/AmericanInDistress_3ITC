@@ -6,24 +6,31 @@ using UnityEngine;
 public class Tile : MonoBehaviour
 {
     public TileData TileData { get; set; }
+    public GameObject buildingPrefab;
 
     internal void SetBuilding(GameObject building)
     {
         building.transform.SetParent(transform);
-        building.transform.localPosition = Vector3.zero;
+        building.transform.localPosition = new Vector3(1.25f, 0.5f, 1.25f);
     }
 
     private void OnMouseDown()
     {
-        var cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        if (buildingPrefab != null)
+        {
+            var building = Instantiate(buildingPrefab);
+            SetBuilding(building);
 
-        Debug.Log(cube);
-
-        var cmd = new BuildCommand(
-            cube,
-            this
+            var cmd = new BuildCommand(
+                building, 
+                this
             );
 
-        CommandQueue.Instance.AddCommand(cmd);
+            CommandQueue.Instance.AddCommand(cmd);
+        }
+        else
+        {
+            Debug.LogWarning("Prefab budovy není nastaven!");
+        }
     }
 }
