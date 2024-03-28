@@ -131,6 +131,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buildingPrefab: {fileID: 5566917392140175650, guid: 2ded0c048f0ea1047ab2a03d3ba9571a,
     type: 3}
+  buildingPrefab2: {fileID: 5566917392140175650, guid: bbf4e650427a1c74f88394ffe6fbdd55,
+    type: 3}
+  button1: {fileID: 3110370117390410014, guid: d456fd4676fa22c42aafecb6cad056de, type: 3}
+  button2: {fileID: 5731751483238865296, guid: 7c7d704c05114a64a9a453e8fdda45b1, type: 3}
 --- !u!65 &1860474764
 BoxCollider:
   m_ObjectHideFlags: 0
