@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 
 public class Tile : MonoBehaviour
 {
-    viewmanagement view;
+    private viewmanagement view;
+    private bool isMouseDown = false;
+    private float lastSpawnTime = 0f;
+    private float spawnCooldown = 1f; // Cooldown pro spawnování kostiček
+
     public TileData TileData { get; set; }
     public GameObject buildingPrefab;
     public GameObject buildingPrefab2;
@@ -23,7 +26,6 @@ public class Tile : MonoBehaviour
         Debug.Log("pressed " + lastPressedButton);
     }
 
-
     internal void SetBuilding(GameObject building)
     {
         building.transform.SetParent(transform);
@@ -37,31 +39,55 @@ public class Tile : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (view != null && (view.wood > 0 || view.money > 0))
+        if (!isMouseDown && Time.time - lastSpawnTime >= spawnCooldown)
         {
-            // Kontrola, zda je nastaven prefab
-            if (buildingPrefab != null && buildingPrefab2 != null)
+            isMouseDown = true;
+            lastSpawnTime = Time.time;
+
+            if (view != null && (view.wood > 0 || view.money > 0))
             {
-                Debug.Log("stavise " + lastPressedButton);
-                // Spawnout prefab místo kostky
-                var building = GameObject.Instantiate(buildingPrefab);
-                var building2 = GameObject.Instantiate(buildingPrefab2);
-                var cmd = new BuildCommand(
-                    building,
-                    building2,
-                    this,
-                    view,
-                    lastPressedButton);
-                CommandQueue.Instance.AddCommand(cmd);
+                SpawnBuilding(); // Spawnovat prefab a odečíst peníze
             }
             else
             {
-                Debug.LogWarning("Prefab pro stavbu není nastaven.");
+                Debug.LogWarning("Není dostatek dřeva nebo peněz pro spawn stavby.");
+            }
+        }
+    }
+
+    private void SpawnBuilding()
+    {
+        if (buildingPrefab != null && buildingPrefab2 != null)
+        {
+            Debug.Log("stavise " + lastPressedButton);
+            var building = GameObject.Instantiate(buildingPrefab);
+            var building2 = GameObject.Instantiate(buildingPrefab2);
+            var cmd = new BuildCommand(
+                building,
+                building2,
+                this,
+                view,
+                lastPressedButton);
+            CommandQueue.Instance.AddCommand(cmd);
+            if (lastPressedButton == 1)
+            {
+                view.RemoveMoney(100);
+                view.RemoveWood(100);
+            }
+            else if (lastPressedButton == 2)
+            {
+                view.RemoveMoney(200);
+                view.RemoveWood(200);
             }
         }
         else
         {
-            Debug.LogWarning("Není dostatek døeva nebo penìz pro spawn stavby.");
+            Debug.LogWarning("Prefab pro stavbu není nastaven.");
         }
+    }
+
+    private void OnMouseUp()
+    {
+        isMouseDown = false;
     }
 }
