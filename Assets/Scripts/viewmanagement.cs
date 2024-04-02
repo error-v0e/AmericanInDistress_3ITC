@@ -15,10 +15,10 @@ public class viewmanagement : MonoBehaviour
     private void UpdateUI()
     {
         if (woodText != null)
-            woodText.text = "Døevo: " + wood;
+            woodText.text = "Drevo: " + wood;
 
         if (moneyText != null)
-            moneyText.text = "Peníze: " + money;
+            moneyText.text = "Penize: " + money;
     }
     public void AddWood(int amount)
     {

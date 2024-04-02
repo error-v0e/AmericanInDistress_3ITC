@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ed0a636094d2d642861d9bee503efb0, type: 3}
+  m_Name: Data
+  m_EditorClassIdentifier: 
+  builds:
+  - cena: 100
+    cenaDrevo: 100
+    building: {fileID: 5566917392140175650, guid: 2ded0c048f0ea1047ab2a03d3ba9571a,
+      type: 3}
+  - cena: 200
+    cenaDrevo: 200
+    building: {fileID: 5566917392140175650, guid: bbf4e650427a1c74f88394ffe6fbdd55,
+      type: 3}
